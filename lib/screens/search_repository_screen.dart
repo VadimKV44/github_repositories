@@ -66,7 +66,7 @@ class _SearchRepositoryScreenState extends State<SearchRepositoryScreen> {
                     children: [
                       CustomButtonWidget(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const RepositoryInfoScreen()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => RepositoryInfoScreen(name: _controller.text)));
                         },
                         text: Strings.toFind,
                       ),

@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:github_repositories/api_repositury/data_models/repository_model.dart';
 import 'package:github_repositories/consts/colors.dart';
 import 'package:github_repositories/consts/strings.dart';
 import 'package:github_repositories/consts/styles.dart';
 
 class RepositoryItemWidget extends StatelessWidget {
-  const RepositoryItemWidget({super.key});
+  const RepositoryItemWidget({
+    super.key,
+    required this.repository,
+  });
+
+  final RepositoryModel repository;
 
   @override
   Widget build(BuildContext context) {
@@ -33,18 +39,22 @@ class RepositoryItemWidget extends StatelessWidget {
           children: [
             Row(
               children: [
-                ClipRRect(
+                repository.owner?.avatarUrl != null ? ClipRRect(
                   borderRadius: BorderRadius.circular(50.0),
                   child: Image.network(
-                    "https://avatars.githubusercontent.com/u/9919?v=4",
+                    repository.owner!.avatarUrl!,
                     height: 40.0,
                     width: 40.0,
                   ),
+                ) : const SizedBox(
+                  height: 40.0,
+                  width: 40.0,
+                  child: Placeholder(),
                 ),
                 const SizedBox(width: 10.0),
                 Expanded(
                   child: Text(
-                    'Repository name: accessibility-alt-text-bot',
+                    '${Strings.repositoryName} ${repository.name ?? ''}',
                     style: MainStyles.kBlackColorW500(14.0),
                   ),
                 ),
@@ -56,8 +66,14 @@ class RepositoryItemWidget extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('${Strings.type}Organization', style: MainStyles.kBlackColorW500(12.0),),
-                  Text('${Strings.language}Shell', style: MainStyles.kBlackColorW500(12.0),),
+                  Text(
+                    '${Strings.type} ${repository.owner?.type ?? ''}',
+                    style: MainStyles.kBlackColorW500(12.0),
+                  ),
+                  Text(
+                    '${Strings.language} ${repository.language ?? ''}',
+                    style: MainStyles.kBlackColorW500(12.0),
+                  ),
                 ],
               ),
             ),
@@ -67,8 +83,14 @@ class RepositoryItemWidget extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('${Strings.visibility}public', style: MainStyles.kBlackColorW500(12.0),),
-                  Text('${Strings.forks}7', style: MainStyles.kBlackColorW500(12.0),),
+                  Text(
+                    '${Strings.visibility} ${repository.visibility ?? ''}',
+                    style: MainStyles.kBlackColorW500(12.0),
+                  ),
+                  Text(
+                    '${Strings.forks} ${repository.forks ?? ''}',
+                    style: MainStyles.kBlackColorW500(12.0),
+                  ),
                 ],
               ),
             ),
@@ -78,8 +100,14 @@ class RepositoryItemWidget extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('${Strings.watchers}49', style: MainStyles.kBlackColorW500(12.0),),
-                  Text('${Strings.defaultBranch}main', style: MainStyles.kBlackColorW500(12.0),),
+                  Text(
+                    '${Strings.watchers} ${repository.watchers ?? ''}',
+                    style: MainStyles.kBlackColorW500(12.0),
+                  ),
+                  Text(
+                    '${Strings.defaultBranch} ${repository.defaultBranch ?? ''}',
+                    style: MainStyles.kBlackColorW500(12.0),
+                  ),
                 ],
               ),
             ),
