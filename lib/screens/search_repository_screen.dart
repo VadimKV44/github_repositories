@@ -59,7 +59,13 @@ class _SearchRepositoryScreenState extends State<SearchRepositoryScreen> {
               ListView(
                 children: [
                   SizedBox(height: (MediaQuery.of(context).size.height / 2.5)),
-                  CustomTextFieldWidget(controller: _controller),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                    child: CustomTextFieldWidget(
+                      controller: _controller,
+                      hintText: Strings.github,
+                    ),
+                  ),
                   const SizedBox(height: 60.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

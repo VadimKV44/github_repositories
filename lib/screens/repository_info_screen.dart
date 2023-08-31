@@ -6,6 +6,7 @@ import 'package:github_repositories/blocs/user_cubit/user_cubit.dart';
 import 'package:github_repositories/consts/colors.dart';
 import 'package:github_repositories/consts/strings.dart';
 import 'package:github_repositories/consts/styles.dart';
+import 'package:github_repositories/widgets/custom_text_field_widget.dart';
 import 'package:github_repositories/widgets/loading_widget.dart';
 import 'package:github_repositories/widgets/profile_block_widget.dart';
 import 'package:github_repositories/widgets/repository_item_widget.dart';
@@ -23,6 +24,8 @@ class RepositoryInfoScreen extends StatefulWidget {
 }
 
 class _RepositoryInfoScreenState extends State<RepositoryInfoScreen> {
+  final TextEditingController _controller = TextEditingController();
+
   @override
   void initState() {
     BlocProvider.of<UserCubit>(context).getUser(widget.name);
@@ -31,13 +34,22 @@ class _RepositoryInfoScreenState extends State<RepositoryInfoScreen> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<ReposCubit, ReposState>(
       builder: (context, state) {
-        return Scaffold(
-          backgroundColor: MainColors.kWhiteColor,
-          body: SafeArea(
-            child: getRepositoryInfoScreenWidget(state),
+        return GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+          child: Scaffold(
+            backgroundColor: MainColors.kWhiteColor,
+            body: SafeArea(
+              child: getRepositoryInfoScreenWidget(state),
+            ),
           ),
         );
       },
@@ -57,11 +69,22 @@ class _RepositoryInfoScreenState extends State<RepositoryInfoScreen> {
         ),
       );
     } else if (state is ReposSuccess) {
-      List<RepositoryModel>? repositories = BlocProvider.of<ReposCubit>(context).repositories;
+      List<RepositoryModel>? repositories = BlocProvider.of<ReposCubit>(context).filterRepositories;
 
       repositoryInfoScreenWidget = Column(
         children: [
           const ProfileBlockWidget(),
+          const SizedBox(height: 10.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
+            child: CustomTextFieldWidget(
+              controller: _controller,
+              hintText: Strings.repositoryName,
+              onChanged: (value) {
+                BlocProvider.of<ReposCubit>(context).search(_controller.text);
+              },
+            ),
+          ),
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 40.0, top: 24.0),

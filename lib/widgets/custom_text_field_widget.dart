@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:github_repositories/consts/colors.dart';
-import 'package:github_repositories/consts/strings.dart';
 import 'package:github_repositories/consts/styles.dart';
 
 class CustomTextFieldWidget extends StatelessWidget {
-  const CustomTextFieldWidget({super.key, required this.controller,});
+  const CustomTextFieldWidget({
+    super.key,
+    required this.controller,
+    required this.hintText,
+    this.onChanged,
+  });
 
   final TextEditingController controller;
+  final String hintText;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 40.0),
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
       decoration: BoxDecoration(
         color: MainColors.kWhiteColor,
@@ -37,10 +42,11 @@ class CustomTextFieldWidget extends StatelessWidget {
         cursorColor: MainColors.kBlackColor,
         cursorHeight: 20.0,
         cursorWidth: 4.0,
+        onChanged: onChanged,
         style: MainStyles.kBlackColorW500(20.0),
         cursorRadius: const Radius.circular(6.0),
-        decoration: const InputDecoration(
-          hintText: Strings.github,
+        decoration: InputDecoration(
+          hintText: hintText,
           focusedBorder: InputBorder.none,
           enabledBorder: InputBorder.none,
         ),
