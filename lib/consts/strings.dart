@@ -1,6 +1,6 @@
 abstract class Strings {
   /// For API
-  static const String baseUrl = "https://api.github.com/users/";
+  static const String baseUrl = "https://api.github.com/users";
   static const String unknownError = "Unknown error";
 
   /// For Screens
@@ -18,4 +18,6 @@ abstract class Strings {
   static const String watchers = "Watchers: ";
   static const String defaultBranch = "Default branch: ";
   static const String repositoryName = "Repository name: ";
+  static const String findAllUsers = "Find all users";
+  static const String name = "Name: ";
 }

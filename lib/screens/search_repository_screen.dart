@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:github_repositories/consts/colors.dart';
 import 'package:github_repositories/consts/strings.dart';
 import 'package:github_repositories/consts/styles.dart';
+import 'package:github_repositories/screens/all_users_screen.dart';
 import 'package:github_repositories/screens/repository_info_screen.dart';
 import 'package:github_repositories/widgets/custom_button_widget.dart';
 import 'package:github_repositories/widgets/custom_text_field_widget.dart';
@@ -58,7 +59,19 @@ class _SearchRepositoryScreenState extends State<SearchRepositoryScreen> {
               ),
               ListView(
                 children: [
-                  SizedBox(height: (MediaQuery.of(context).size.height / 2.5)),
+                  SizedBox(height: (MediaQuery.of(context).size.height / 2.8)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CustomButtonWidget(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AllUsersScreen()));
+                        },
+                        text: Strings.findAllUsers,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 60.0),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40.0),
                     child: CustomTextFieldWidget(
